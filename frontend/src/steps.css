@@ -1,0 +1,857 @@
+/* create pages */
+
+/* Background and layout for the creation step pages */
+.create-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #fff9f0 0%, #fff0f9 40%, #f0f4ff 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* navbar */
+.create-navbar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 16px 40px;
+  background: white;
+  border-bottom: 2px solid #f5f0ff;
+}
+
+/* progress bar */
+
+.progress-bar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin: 36px 0 24px;
+  width: 100%;
+  max-width: 520px;
+  padding: 0 24px;
+}
+
+.progress-steps {
+  display: flex;
+  gap: 10px;
+}
+
+.progress-step {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #f0edff;
+  border: 2px solid #d4ccff;
+  color: #b3a8f5;
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Nunito', sans-serif;
+  transition: all 0.3s ease;
+}
+
+/* step circle chosen : purple */
+.progress-step.active {
+  background: #6c5ce7;
+  border-color: #6c5ce7;
+  color: white;
+  box-shadow: 0 4px 14px rgba(108, 92, 231, 0.45);
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: #ede8ff;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+/* Colored fill inside the progress bar */
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #6c5ce7, #f472b6);
+  border-radius: 999px;
+  transition: width 0.5s ease;
+}
+
+/* "Step x of 6" below the bar */
+.progress-label {
+  font-size: 13px;
+  color: #aaa;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 600;
+}
+
+/* main card */
+
+.create-card {
+  background: white;
+  border-radius: 32px;
+  padding: 48px 44px;
+  max-width: 580px;
+  width: calc(100% - 48px);
+  text-align: center;
+  box-shadow: 0 8px 40px rgba(108, 92, 231, 0.1);
+  border: 2px solid #f0edff;
+  margin-bottom: 40px;
+}
+
+/* emoji icon at the top of each card */
+.step-icon-big {
+  font-size: 72px;
+  margin-bottom: 20px;
+  display: block;
+}
+
+/* Card main title */
+.create-title {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 34px;
+  color: #3d348b;
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+
+/* Card subtitle  */
+.create-subtitle {
+  font-size: 16px;
+  color: #aaa;
+  margin-bottom: 32px;
+  font-family: 'Nunito', sans-serif;
+}
+
+
+/* text used for the character name */
+.create-input {
+  width: 100%;
+  padding: 18px 24px;
+  border-radius: 16px;
+  border: 2.5px solid #d4ccff;
+  background: #faf9ff;
+  color: #333;
+  font-size: 22px;
+  font-family: 'Fredoka', sans-serif;
+  text-align: center;
+  outline: none;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+  margin-bottom: 28px;
+}
+
+.create-input::placeholder {
+  color: #ccc;
+}
+
+.create-input:focus {
+  border-color: #6c5ce7;
+  box-shadow: 0 0 0 4px rgba(108, 92, 231, 0.1);
+}
+
+/* name suggestions */
+
+.suggestions {
+  margin-bottom: 32px;
+}
+
+/* "Need inspiration?" label */
+.suggestions-label {
+  font-size: 13px;
+  color: #bbb;
+  margin-bottom: 14px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+/* Row of suggestion buttons */
+.suggestions-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.suggestion-btn {
+  background: #f7f5ff;
+  border: 2px solid #e0d9ff;
+  border-radius: 999px;
+  padding: 8px 20px;
+  color: #6c5ce7;
+  font-size: 15px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.suggestion-btn:hover {
+  background: #ede8ff;
+  border-color: #6c5ce7;
+  transform: translateY(-2px);
+}
+
+/* Selected suggestion: in purple */
+.suggestion-btn.selected {
+  background: #6c5ce7;
+  border-color: #6c5ce7;
+  color: white;
+  box-shadow: 0 4px 12px rgba(108, 92, 231, 0.35);
+}
+
+/* section divider */
+
+/* a thin horizontal line between the sections */
+.section-divider {
+  width: 100%;
+  height: 2px;
+  background: #f0edff;
+  border-radius: 999px;
+  margin: 8px 0 24px;
+}
+
+.section-label {
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #bbb;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 16px;
+}
+
+/*gender selection */
+
+/* Row of 3 gender buttons */
+.gender-list {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  margin-bottom: 32px;
+}
+
+/* gender button */
+.gender-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 20px 12px;
+  border-radius: 20px;
+  border: 2.5px solid #e0d9ff;
+  background: #faf9ff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.gender-btn:hover {
+  border-color: #6c5ce7;
+  background: #f0edff;
+  transform: translateY(-3px);
+}
+
+/* Selected gender button : in purple */
+.gender-btn.selected {
+  border-color: #6c5ce7;
+  background: #6c5ce7;
+  box-shadow: 0 6px 18px rgba(108, 92, 231, 0.35);
+  transform: translateY(-3px);
+}
+
+/* Emoji inside gender button */
+.gender-emoji {
+  font-size: 40px;
+}
+
+/* Label below emoji in gender button */
+.gender-label {
+  font-family: 'Nunito', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #6c5ce7;
+}
+
+.gender-btn.selected .gender-label {
+  color: white;
+}
+
+/* age selection */
+
+/* Column of age range buttons */
+.age-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.age-btn {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 24px;
+  border-radius: 18px;
+  border: 2.5px solid #e0d9ff;
+  background: #faf9ff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.age-btn:hover {
+  border-color: #6c5ce7;
+  background: #f0edff;
+  transform: translateX(4px);
+}
+
+/* Selected age button : purple */
+.age-btn.selected {
+  border-color: #6c5ce7;
+  background: linear-gradient(135deg, #f0edff, #e8e4ff);
+  box-shadow: 0 4px 16px rgba(108, 92, 231, 0.2);
+}
+
+/* Emoji on the left of the age button */
+.age-emoji {
+  font-size: 36px;
+  flex-shrink: 0;
+}
+
+/* Text block with label and description */
+.age-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+/* Age range label */
+.age-label {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 20px;
+  color: #3d348b;
+}
+
+/* Small description below the age label */
+.age-description {
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px;
+  color: #aaa;
+}
+
+.age-check {
+  font-size: 20px;
+  color: #6c5ce7;
+  font-weight: 700;
+}
+
+/* navigation buttons */
+
+/* Row with back and next buttons */
+.nav-buttons {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+/* Back button : white with purple border */
+.back-btn {
+  padding: 18px 24px;
+  border-radius: 16px;
+  border: 2.5px solid #e0d9ff;
+  background: white;
+  color: #6c5ce7;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: 'Nunito', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.back-btn:hover {
+  background: #f0edff;
+  border-color: #6c5ce7;
+}
+
+/* Next button : in purple  */
+.create-next-btn {
+  width: 100%;
+  padding: 18px;
+  border-radius: 16px;
+  border: none;
+  background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+  color: white;
+  font-size: 20px;
+  font-weight: 800;
+  font-family: 'Nunito', sans-serif;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(108, 92, 231, 0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.create-next-btn:hover:not(.disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(108, 92, 231, 0.55);
+}
+
+/* Disabled state : not clickable */
+.create-next-btn.disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* color picker */
+
+/* Container for one color category */
+.color-section {
+  margin-bottom: 8px;
+  text-align: left;
+}
+
+/* Label above the color circles */
+.color-section-label {
+  font-family: 'Nunito', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #555;
+  margin-bottom: 12px;
+}
+
+/* Row of color circle buttons */
+.color-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.color-dot {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  outline: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.color-dot:hover {
+  transform: scale(1.15);
+}
+
+/* Selected color : a purple ring around it */
+.color-dot.selected {
+  transform: scale(1.2);
+  box-shadow: 0 0 0 3px white, 0 0 0 5px #6c5ce7;
+}
+
+.color-check {
+  color: white;
+  font-size: 18px;
+  font-weight: 900;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+/* idea of the story */
+
+/* text area for the idea of the story */
+.story-textarea {
+  width: 100%;
+  padding: 18px 20px;
+  border-radius: 16px;
+  border: 2.5px solid #d4ccff;
+  background: #faf9ff;
+  color: #333;
+  font-size: 16px;
+  font-family: 'Nunito', sans-serif;
+  line-height: 1.6;
+  outline: none;
+  resize: none;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+  margin-bottom: 8px;
+}
+
+.story-textarea::placeholder {
+  color: #ccc;
+}
+
+.story-textarea:focus {
+  border-color: #6c5ce7;
+  box-shadow: 0 0 0 4px rgba(108, 92, 231, 0.1);
+}
+
+/* Character count displayed */
+.char-counter {
+  font-size: 13px;
+  color: #bbb;
+  font-family: 'Nunito', sans-serif;
+  text-align: right;
+  margin-bottom: 24px;
+}
+
+/* warning color when characters are too few */
+.char-warning {
+  color: #f4a261;
+}
+
+/* examples for the story ideas */
+
+.examples-section {
+  margin-bottom: 32px;
+  text-align: left;
+}
+
+.examples-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.example-btn {
+  background: #f7f5ff;
+  border: 2px solid #e0d9ff;
+  border-radius: 12px;
+  padding: 12px 16px;
+  color: #555;
+  font-size: 14px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+}
+
+.example-btn:hover {
+  background: #ede8ff;
+  border-color: #6c5ce7;
+  color: #6c5ce7;
+  transform: translateX(4px);
+}
+
+/* style grid */
+
+/*  grid of story style buttons */
+.style-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.style-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 28px 16px;
+  border-radius: 20px;
+  border: 2.5px solid;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.style-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.style-btn.selected {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+/*  emoji in each style button */
+.style-emoji {
+  font-size: 44px;
+}
+
+/* Style name label */
+.style-label {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 22px;
+  color: #333;
+  font-weight: 600;
+}
+
+/* Label becomes white when selected */
+.style-btn.selected .style-label {
+  color: white;
+}
+
+/* description below the style name */
+.style-description {
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px;
+  color: #777;
+  line-height: 1.4;
+}
+
+/* Description becomes light white when selected */
+.style-btn.selected .style-description {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+
+/* loading screen */
+
+/*  centered loading layout */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  padding: 60px 24px;
+  gap: 24px;
+}
+
+.loading-spinner {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 5px solid #e0d9ff;
+  border-top-color: #6c5ce7;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Emoji in the center */
+.spinner-emoji {
+  font-size: 40px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+/* Loading title : "Creating x's story..." */
+.loading-title {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 30px;
+  color: #3d348b;
+  text-align: center;
+}
+
+/* loading message below the title */
+.loading-message {
+  font-family: 'Nunito', sans-serif;
+  font-size: 17px;
+  color: #aaa;
+  text-align: center;
+  min-height: 28px;
+  transition: opacity 0.3s ease;
+}
+
+/*story panel card */
+
+.panel-card {
+  max-width: 620px;
+}
+
+.panel-number {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 16px;
+  color: #a29bfe;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+}
+
+.panel-text-box {
+  background: linear-gradient(135deg, #f7f5ff, #fff0f9);
+  border: 2px solid #e0d9ff;
+  border-radius: 20px;
+  padding: 32px 28px;
+  margin-bottom: 8px;
+}
+
+/* text of the story inside the panel */
+.panel-text {
+  font-family: 'Nunito', sans-serif;
+  font-size: 19px;
+  line-height: 1.8;
+  color: #333;
+  text-align: center;
+}
+
+/* at the end of the story */
+
+/* Save and new story buttons */
+.end-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+/* Save story button : purple */
+.save-btn {
+  width: 100%;
+  padding: 18px;
+  border-radius: 16px;
+  border: none;
+  background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+  color: white;
+  font-size: 18px;
+  font-weight: 800;
+  font-family: 'Nunito', sans-serif;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(108, 92, 231, 0.4);
+  transition: transform 0.2s ease;
+}
+
+.save-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* New story button : white with purple border */
+.new-story-btn {
+  width: 100%;
+  padding: 16px;
+  border-radius: 16px;
+  border: 2.5px solid #e0d9ff;
+  background: white;
+  color: #6c5ce7;
+  font-size: 17px;
+  font-weight: 700;
+  font-family: 'Nunito', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.new-story-btn:hover {
+  background: #f0edff;
+  border-color: #6c5ce7;
+}
+
+/* auth page*/
+
+/* card for the login/register page */
+.auth-card {
+  max-width: 480px;
+  margin-top: 20px;
+}
+
+/* Tab switcher container */
+.auth-tabs {
+  display: flex;
+  gap: 0;
+  background: #f0edff;
+  border-radius: 12px;
+  padding: 4px;
+  margin-bottom: 24px;
+}
+
+.auth-tab {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  font-family: 'Nunito', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #aaa;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* current tab : white background */
+.auth-tab.active {
+  background: white;
+  color: #6c5ce7;
+  box-shadow: 0 2px 8px rgba(108, 92, 231, 0.15);
+}
+
+/* Error or success message below the tabs */
+.auth-message {
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 12px 16px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+/* Red error message */
+.auth-message.error {
+  background: #fff0f0;
+  color: #e63946;
+  border: 2px solid #ffb3b3;
+}
+
+/* Green success message */
+.auth-message.success {
+  background: #f0fff4;
+  color: #2dc653;
+  border: 2px solid #b3f0c8;
+}
+
+/* Column of form fields */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+}
+
+.auth-label {
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #555;
+}
+
+/* text : "No account yet? Create one!"  */
+.auth-switch {
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  color: #aaa;
+  text-align: center;
+  margin-top: 4px;
+}
+
+/* Clickable link to switch between login and register */
+.auth-switch-link {
+  color: #6c5ce7;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.auth-switch-link:hover {
+  color: #4a3fbf;
+}

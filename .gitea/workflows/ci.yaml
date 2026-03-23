@@ -16,8 +16,8 @@ jobs:
         env:
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git clone --depth 1 "https://oauth2:${TOKEN}@${GITHUB_SERVER_URL#https://}/${GITHUB_REPOSITORY}.git" .
-          git checkout ${{ github.sha }}
+          BRANCH="${{ github.head_ref || github.ref_name }}"
+          git clone --depth 1 --branch "${BRANCH}" "https://oauth2:${TOKEN}@${GITHUB_SERVER_URL#https://}/${GITHUB_REPOSITORY}.git" .
 
       - name: Install Trivy
         run: |
@@ -40,7 +40,8 @@ jobs:
         env:
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git clone --depth 1 "https://oauth2:${TOKEN}@${GITHUB_SERVER_URL#https://}/${GITHUB_REPOSITORY}.git" .
+          BRANCH="${{ github.head_ref || github.ref_name }}"
+          git clone --depth 1 --branch "${BRANCH}" "https://oauth2:${TOKEN}@${GITHUB_SERVER_URL#https://}/${GITHUB_REPOSITORY}.git" .
 
       - name: Login to Docker Hub
         run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin

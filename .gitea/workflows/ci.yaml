@@ -49,20 +49,15 @@ jobs:
 
       - name: Login to Docker Hub
         env:
-          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-        run: echo "${DOCKERHUB_TOKEN}" | docker login -u "${DOCKERHUB_USERNAME}" --password-stdin
+        run: echo "${DOCKERHUB_TOKEN}" | docker login -u "hyperzyj" --password-stdin
 
       - name: Build and push frontend image
-        env:
-          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
         run: |
-          docker build -t "${DOCKERHUB_USERNAME}/storybuddy-frontend:latest" ./frontend
-          docker push "${DOCKERHUB_USERNAME}/storybuddy-frontend:latest"
+          docker build -t "hyperzyj/storybuddy-frontend:latest" ./frontend
+          docker push "hyperzyj/storybuddy-frontend:latest"
 
       - name: Build and push story-service image
-        env:
-          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
         run: |
-          docker build -t "${DOCKERHUB_USERNAME}/storybuddy-story-service:latest" ./story-service
-          docker push "${DOCKERHUB_USERNAME}/storybuddy-story-service:latest"
+          docker build -t "hyperzyj/storybuddy-story-service:latest" ./story-service
+          docker push "hyperzyj/storybuddy-story-service:latest"

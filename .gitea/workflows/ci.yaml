@@ -48,16 +48,21 @@ jobs:
           git clone --depth 1 --branch "${BRANCH}" "https://oauth2:${TOKEN}@${GITHUB_SERVER_URL#https://}/${GITHUB_REPOSITORY}.git" .
 
       - name: Login to Docker Hub
+        continue-on-error: true
         env:
           DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
         run: echo "${DOCKERHUB_TOKEN}" | docker login -u "hyperzyj" --password-stdin
 
-      - name: Build and push frontend image
-        run: |
-          docker build -t "hyperzyj/storybuddy-frontend:latest" ./frontend
-          docker push "hyperzyj/storybuddy-frontend:latest"
+      - name: Build frontend image
+        run: docker build -t "hyperzyj/storybuddy-frontend:latest" ./frontend
 
-      - name: Build and push story-service image
-        run: |
-          docker build -t "hyperzyj/storybuddy-story-service:latest" ./story-service
-          docker push "hyperzyj/storybuddy-story-service:latest"
+      - name: Push frontend image
+        continue-on-error: true
+        run: docker push "hyperzyj/storybuddy-frontend:latest"
+
+      - name: Build story-service image
+        run: docker build -t "hyperzyj/storybuddy-story-service:latest" ./story-service
+
+      - name: Push story-service image
+        continue-on-error: true
+        run: docker push "hyperzyj/storybuddy-story-service:latest"

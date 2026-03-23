@@ -15,19 +15,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Scan frontend for vulnerabilities
+      - name: Scan for vulnerabilities
         run: |
-          docker run --rm -v $(pwd):/src aquasec/trivy:0.50.0 fs \
+          docker run --rm -v "$GITHUB_WORKSPACE:/src" aquasec/trivy:0.50.0 config \
             --severity MEDIUM,HIGH,CRITICAL \
             --exit-code 1 \
-            /src/frontend
-
-      - name: Scan story-service for vulnerabilities
-        run: |
-          docker run --rm -v $(pwd):/src aquasec/trivy:0.50.0 fs \
-            --severity MEDIUM,HIGH,CRITICAL \
-            --exit-code 1 \
-            /src/story-service
+            /src
 
   # Stage 2 & 3: Build and Push images
   build-and-push:

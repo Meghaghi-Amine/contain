@@ -51,3 +51,10 @@ jobs:
           context: ./story-service
           push: true
           tags: hyperzyj/storybuddy-story-service:latest
+
+      - name: Build and push user-service image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./user-service
+          push: true
+          tags: hyperzyj/storybuddy-user-service:latest

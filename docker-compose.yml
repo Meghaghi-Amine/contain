@@ -11,6 +11,8 @@ services:
     depends_on:
       story-service:
         condition: service_healthy
+      user-service:
+        condition: service_healthy
     restart: unless-stopped
 
   story-service:
@@ -41,6 +43,34 @@ services:
       start_period: 15s
       retries: 3
 
+  user-service:
+    build:
+      context: ./user-service
+    container_name: user-service
+    ports:
+      - "5002:5002"
+    environment:
+      - PORT=5002
+      - DB_HOST=user-db
+      - DB_USER=${USER_DB_USER}
+      - DB_PASSWORD=${USER_DB_PASSWORD}
+      - DB_NAME=${USER_DB_NAME}
+      - DB_PORT=5432
+      - JWT_SECRET=${JWT_SECRET}
+    depends_on:
+      user-db:
+        condition: service_healthy
+    networks:
+      - frontend-net
+      - user-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"fetch('http://localhost:5002/health').then(r => process.exit(r.ok ? 0 : 1))\""]
+      interval: 30s
+      timeout: 5s
+      start_period: 15s
+      retries: 3
+
   story-db:
     image: postgres:14-alpine
     container_name: story-db
@@ -61,11 +91,34 @@ services:
       retries: 5
     restart: unless-stopped
 
+  user-db:
+    image: postgres:14-alpine
+    container_name: user-db
+    environment:
+      - POSTGRES_USER=${USER_DB_USER}
+      - POSTGRES_PASSWORD=${USER_DB_PASSWORD}
+      - POSTGRES_DB=${USER_DB_NAME}
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - user-db-data:/var/lib/postgresql/data
+      - ./user-service/db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - user-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${USER_DB_USER} -d ${USER_DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
 networks:
   frontend-net:
     driver: bridge
   story-net:
     driver: bridge
+  user-net:
+    driver: bridge
 
 volumes:
   story-db-data:
+  user-db-data:

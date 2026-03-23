@@ -1,0 +1,71 @@
+services:
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    networks:
+      - frontend-net
+    depends_on:
+      story-service:
+        condition: service_healthy
+    restart: unless-stopped
+
+  story-service:
+    build:
+      context: ./story-service
+    container_name: story-service
+    ports:
+      - "5001:5001"
+    environment:
+      - PORT=5001
+      - DB_HOST=story-db
+      - DB_USER=${STORY_DB_USER}
+      - DB_PASSWORD=${STORY_DB_PASSWORD}
+      - DB_NAME=${STORY_DB_NAME}
+      - DB_PORT=5432
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    depends_on:
+      story-db:
+        condition: service_healthy
+    networks:
+      - frontend-net
+      - story-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"fetch('http://localhost:5001/health').then(r => process.exit(r.ok ? 0 : 1))\""]
+      interval: 30s
+      timeout: 5s
+      start_period: 15s
+      retries: 3
+
+  story-db:
+    image: postgres:14-alpine
+    container_name: story-db
+    environment:
+      - POSTGRES_USER=${STORY_DB_USER}
+      - POSTGRES_PASSWORD=${STORY_DB_PASSWORD}
+      - POSTGRES_DB=${STORY_DB_NAME}
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - story-db-data:/var/lib/postgresql/data
+      - ./story-service/db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - story-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${STORY_DB_USER} -d ${STORY_DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+networks:
+  frontend-net:
+    driver: bridge
+  story-net:
+    driver: bridge
+
+volumes:
+  story-db-data:
